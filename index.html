@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,27 +10,60 @@
 <link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
 <title>CodePen - AACoding04-6 !!!!!!!!!!!</title>
 <style>
-.correct{
-  background:lightgreen;
+.correct {
+  background: lightblue;
 }
 
-.incorrect{
-  background:pink;
+.incorrect {
+  background: pink;
 }
-html { 
-  background:  url(http://upload.wikimedia.org/wikipedia/commons/d/dd/Muybridge_race_horse_animated.gif) no-repeat right; 
-  background-size: 600px;
+
+#mygifs {
+  font-weight: 50;
+  font-size: 15vmin;
+  color: #7132ee;
+  text-align: center;
+}
+
+.nina {
+  color: black;
+  font-size: 3vmin;
+}
+
+
+html, body{
+	width:100%; 
+	height:100%; 
+	background: #e6e6ff;
+  
+}
+
+#fireworks{ 
+  position: absolute;
+      left: 300px;
+      top: 200px;
+      width: 40%;
+      height: 45%;
+background-size: 275px;
 }
 </style>
 </head>
 <body translate="no">
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<img id="fireworks" src="https://media.giphy.com/media/26tOZ42Mg6pbTUPHW/giphy.gif" <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <audio id="sad" controls>
 <source src="https://math.seattleacademy.org/garyanderson/snd/sad.mp3" type="audio/mpeg">
 Your browser does not support the audio tag
 </audio>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<audio id="happy" controls>
+  <source src="https://www.pacdv.com/sounds/miscellaneous_sounds/fireworks-1.wav">
+  Your browser does not support the audio tag
+</audio>
+<section class="nina">
 <h1>Nina's Math Problems</h1>
+</section>
 <div>Timer: <span id="theTime">0</span> Score: <span id="score">0</span>
 </div>Errors: <span id="errors">0</span>
 <ol>
@@ -40,17 +74,26 @@ Your browser does not support the audio tag
 <li>\( 7^3 \) <input data-correct="343" /></li>
 <li>\( \sqrt[5]{243}\) <input data-correct="3" /></li>
 <li>\( 1^{-7}\) <input data-correct="1" /></li>
-<li>\( 3^\frac{1}{4} \) <input data-correct="3/4" /></li>
+<li>\( -16^\frac{-1}{4} \) <input data-correct="-1/2" /></li>
 <li>\( \frac {\sqrt 81}{\sqrt[3] 8} \) <input data-correct="9/2" /></li>
-<li>\( (-2^\frac{1}{2}) \) <input data-correct="-1" /></li>
+<li>\( 4^\frac{1}{2} \) <input data-correct="2" /></li>
 <li>\( \frac {3}{8}+\frac{3}{2}\) <input data-correct="15/8" /></li>
-<li>\( 4^5 \) <input data-correct="1024" /> <li>\( 64^\frac{1}{6} \) <input data-correct="2" /></li>
+<li>\( 4^5 \) <input data-correct="1024" />
+<li>\( 64^\frac{1}{6} \) <input data-correct="2" /></li>
 </ol>
+</style>
+<div id="fireworks"></div>
+<div id="mygifs"></div>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
 <script id="rendered-js">
 console.clear();
 const sad = document.getElementById("sad");
 setInterval(upTime, 1000);
+
+console.clear();
+const happy = document.getElementById("happy");
+setInterval(upTime, 1000);
+
 
 function upTime() {
   let theTime = Number($("#theTime").text());
@@ -61,6 +104,7 @@ $("input").change(onChange);
 
 function onChange(evt) {
   let correct = $(this).data("correct");
+  let incorrect = $(this).data("incorrect");
   let response = $(this).val();
 
   if (correct == response) {
@@ -70,18 +114,20 @@ function onChange(evt) {
     let theScore = Number($("#score").text());
     theScore = theScore + 1;
     $("#score").text(theScore);
+    if (Math.random() > 0.9) happy.play(); 
   } else {
+    $(this)
+      .removeClass("correct")
+      .addClass("incorrect");
+    let theErrors = Number($("#errors").text());
+    theErrors = theErrors + 1;
+    $("#errors").text(theErrors);
     if (Math.random() > 0.1) {
       sad.play();
     }
     $(this)
       .removeClass("correct")
       .addClass("incorrect");
-  }
-  if (response == "") {
-    $(this)
-      .removeClass("incorrect")
-      .removeClass("correct");
   }
 }
     </script>
